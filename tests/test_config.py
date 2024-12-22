@@ -1,7 +1,9 @@
 """``pytest`` test cases for the ``config`` module."""
 
 import yaml
+
 from redsun_simulator import OpenWFSMotorInfo
+
 
 def test_motor_model_info(config_path: str) -> None:
     """Test the OpenWFSMotorInfo information model."""

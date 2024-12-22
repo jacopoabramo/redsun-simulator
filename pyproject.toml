@@ -33,7 +33,12 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "sunflare[dev]"
+  "isort",
+  "ruff",
+  "pre-commit",
+  "pytest",
+  "pytest-cov",
+  "mypy"
 ]
 docs = [
     "sphinx",

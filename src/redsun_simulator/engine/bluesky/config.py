@@ -1,4 +1,5 @@
 from typing import ClassVar
+
 from psygnal import SignalGroupDescriptor
 from pydantic import Field
 from sunflare.config import MotorModelInfo

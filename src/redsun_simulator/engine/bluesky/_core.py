@@ -1,7 +1,7 @@
 """Core simulators built using OpenWFS."""
 import numpy as np
-from openwfs.core import Actuator  # type: ignore[import-untyped]
 from astropy import units as u  # type: ignore[import-untyped]
+from openwfs.core import Actuator  # type: ignore[import-untyped]
 
 
 class SingleAxisStage(Actuator):

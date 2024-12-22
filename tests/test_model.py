@@ -1,14 +1,16 @@
 """``pytest`` test cases for the ``model`` module."""
 
-import yaml
-import pytest
-import numpy as np
 import time
-import bluesky.plan_stubs as bps
 from typing import Tuple
+
+import bluesky.plan_stubs as bps
+import numpy as np
+import pytest
+import yaml
 from bluesky.run_engine import RunEngine
 from bluesky.utils import MsgGenerator
 from sunflare.types import Location
+
 from redsun_simulator import OpenWFSMotor, OpenWFSMotorInfo
 
 

@@ -1,6 +1,8 @@
 import logging
 import os
+
 import pytest
+
 
 @pytest.fixture
 def config_path() -> str:

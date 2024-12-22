@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-import astropy.units as u # type: ignore[import-untyped]
-from astropy.units import Quantity
-
 from time import sleep
 from typing import Any, Optional
 
+import astropy.units as u  # type: ignore[import-untyped]
+from astropy.units import Quantity
 from sunflare.engine import MotorModel, Status
 from sunflare.types import Location
 
-from .config import OpenWFSMotorInfo
-
 from ._core import SingleAxisStage
+from .config import OpenWFSMotorInfo
 
 
 class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
