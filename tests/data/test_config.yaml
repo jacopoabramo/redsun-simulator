@@ -1,0 +1,7 @@
+motors:
+  Mock motor:
+    model_name: OpenWFSMotor
+    axes:
+      - X
+      - Y
+      - Z

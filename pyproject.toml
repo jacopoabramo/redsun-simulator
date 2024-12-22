@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling>=1.8.0", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "redsun-simulator"
+dynamic = ["version"]
+description = "Bundle of simulators built upon OpenWFS"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+  { name = "Jacopo Abramo", email = "jacopo.abramo@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering"
+]
+requires-python = ">=3.9"
+dependencies = [
+    "sunflare",
+    "openwfs"
+]
+
+[project.optional-dependencies]
+dev = [
+    "sunflare[dev]"
+]
+docs = [
+    "sphinx",
+    "pydata-sphinx-theme",
+    "myst-parser"
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/redsun-acquisition/redsun-simulator/issues"
+"Documentation" = "https://github.com/redsun-acquisition/redsun-simulator#README.md"
+"Source Code" = "https://github.com/redsun-acquisition/redsun-simulator"
+"User Support" = "https://github.com/redsun-acquisition/redsun-simulator/issues"
+
+[project.entry-points]
+[project.entry-points."redsun.plugins.redsun.plugins.motors"]
+openwfsmotor_config = "redsun_simulator:OpenWFSMotorInfo"
+openwfsmotor = "redsun_simulator:OpenWFSMotor"
+
+[tool.ruff]
+target-version = "py39"
+extend-exclude = ["docs", "tests", "noxfile.py"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src"]
+sources = ["src"]

@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 71620cb
+_src_path: https://github.com/redsun-acquisition/redsun-plugin-template
+class_baseline: OpenWFSMotor
+display_name: RedSun Simulators
+email: jacopo.abramo@gmail.com
+full_name: Jacopo Abramo
+github_repository_url: https://github.com/redsun-acquisition/redsun-simulator
+github_username_or_organization: redsun-acquisition
+license: BSD-3
+module_name: redsun_simulator
+plugin_model_type: Motor
+plugin_name: redsun-simulator
+plugin_type: Model
+short_description: Bundle of simulators built upon OpenWFS
