@@ -5,8 +5,8 @@ from typing import Any, Optional
 
 import astropy.units as u  # type: ignore[import-untyped]
 from astropy.units import Quantity
+from bluesky.protocols import Location
 from sunflare.engine import MotorModel, Status
-from sunflare.types import Location
 
 from ._core import SingleAxisStage
 from .config import OpenWFSMotorInfo
@@ -16,7 +16,6 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
     """OpenWFSMotor model."""
 
     def __init__(self, name: str, model_info: OpenWFSMotorInfo) -> None:
-        
         self._motors: dict[str, SingleAxisStage] = {
             axis: SingleAxisStage(model_info.step_size, axis)
             for axis in model_info.axes
@@ -40,7 +39,7 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
 
     def set(self, value: float) -> Status:
         """Start moving the motor to the setpoint.
-        
+
         The axis along which to move is determined by the ``current_axis`` attribute.
         A ``Status`` object is returned to track the movement; this has a callback
         to simulate the setpoint being reached.
@@ -49,7 +48,7 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
         ----------
         value : AxisLocation[float]
             The location to move to.
-        
+
         Returns
         -------
         status : Status
@@ -77,13 +76,16 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
         location : AxisLocation[float]
             The current location of the Device.
         """
-        return Location(setpoint=self._setpoint[self.current_axis], readback=self._readback[self.current_axis])
-    
+        return Location(
+            setpoint=self._setpoint[self.current_axis],
+            readback=self._readback[self.current_axis],
+        )
+
     @property
     def current_axis(self) -> str:
         """The current axis of the motor."""
         return self._current_axis
-    
+
     @current_axis.setter
     def current_axis(self, axis: str) -> None:
         if axis not in self.model_info.axes:
@@ -102,18 +104,19 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
 
     def _wait_readback(self, _: Status) -> None:
         """Simulate the motor moving to the setpoint via a callback.
-        
+
         Parameters
         ----------
         s : Status
             The status object (not used).
         """
-        self._motors[self.current_axis].wait(up_to=Quantity(self.setpoint_time * 1000, u.ms))
+        self._motors[self.current_axis].wait(
+            up_to=Quantity(self.setpoint_time * 1000, u.ms)
+        )
         self._readback[self.current_axis] = self._setpoint[self.current_axis]
-    
+
     @property
     def parent(self) -> Optional[Any]:
         # TODO: how to get rid of this?
         #       or alternatively, how to make it useful?
         return None
-

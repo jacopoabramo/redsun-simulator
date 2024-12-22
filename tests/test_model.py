@@ -7,9 +7,9 @@ import bluesky.plan_stubs as bps
 import numpy as np
 import pytest
 import yaml
+from bluesky.protocols import Location
 from bluesky.run_engine import RunEngine
 from bluesky.utils import MsgGenerator
-from sunflare.types import Location
 
 from redsun_simulator import OpenWFSMotor, OpenWFSMotorInfo
 
