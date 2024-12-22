@@ -83,19 +83,13 @@ def test_motor_set_direct(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
         for axis in motor.axes:
             motor.current_axis = axis
             status = motor.set(100)
-            # TODO: waiting in this way is not a good idea;
-            #       this should be addressed in sunflare
-            while not status.done:
-                ...
+            status.wait()
             assert status.done
             assert status.success
             assert motor.locate() == Location(setpoint=100.0, readback=100.0)
 
             status = motor.set(200)
-            # TODO: waiting in this way is not a good idea;
-            #       this should be addressed in sunflare
-            while not status.done:
-                ...
+            status.wait()
             assert status.done
             assert status.success
             assert motor.locate() == Location(setpoint=200.0, readback=200.0)
@@ -126,7 +120,6 @@ def test_motor_plan_absolute(motor_config: dict[str, OpenWFSMotorInfo], RE: RunE
     - first move to position 100;
     - then move to position 200.
     """
-    ...
     def moving_plan(motors: Tuple[OpenWFSMotor, ...]) -> MsgGenerator:
         """Move the motor to position 100 and then to position 200."""
         for m in motors:
@@ -145,7 +138,6 @@ def test_motor_plan_relative(motor_config: dict[str, OpenWFSMotorInfo], RE: RunE
     - first move of 100;
     - then move of 200.
     """
-    ...
     def moving_plan(motors: Tuple[OpenWFSMotor, ...]) -> MsgGenerator:
         """Move the motor to position 100 and then to position 200."""
         for m in motors:
