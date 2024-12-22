@@ -155,5 +155,3 @@ def test_motor_plan_relative(motor_config: dict[str, OpenWFSMotorInfo], RE: RunE
     
     motors = tuple([OpenWFSMotor(name, info) for name, info in motor_config.items()])
     RE(moving_plan(motors))
-    
-    
