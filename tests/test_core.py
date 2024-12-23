@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from redsun_simulator.engine.bluesky._core import SingleAxisStage
 
+
 def test_single_axis_stage() -> None:
     stage = SingleAxisStage(axis="x", step_size=100)
     assert stage.axis == "x"
@@ -19,3 +20,6 @@ def test_single_axis_stage() -> None:
 
     stage.home()
     assert stage.position == 0
+
+    stage.step_size = 200
+    assert stage.step_size == 200
