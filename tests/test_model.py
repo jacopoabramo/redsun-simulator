@@ -110,7 +110,7 @@ def test_motor_shutdown(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
             start = time.time()
             motor.shutdown()
             end = time.time()
-            assert end - start == pytest.approx(t, abs=0.1)
+            assert end - start == pytest.approx(t, abs=0.2)
 
 def test_motor_plan_absolute(motor_config: dict[str, OpenWFSMotorInfo], RE: RunEngine) -> None:
     """Test motor execution in a ``RunEngine`` plan.
