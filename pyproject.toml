@@ -46,6 +46,26 @@ docs = [
     "myst-parser"
 ]
 
+[tool.coverage.run]
+source = ["sunflare"]
+omit = [
+    "src/sunflare/tests/conftest.py",
+    "src/sunflare/view/**",
+    "src/sunflare/engine/handler.py",
+    "src/sunflare/controller/**",
+]
+
+# https://coverage.readthedocs.io/en/latest/config.html
+[tool.coverage.report]
+exclude_lines = [
+    "@abstractmethod",
+    "if TYPE_CHECKING:",
+    "@overload",
+    "except ImportError",
+    "except PackageNotFoundError",
+    "raise NotImplementedError()",
+]
+
 [project.urls]
 "Bug Tracker" = "https://github.com/redsun-acquisition/redsun-simulator/issues"
 "Documentation" = "https://github.com/redsun-acquisition/redsun-simulator#README.md"
