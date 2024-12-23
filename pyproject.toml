@@ -47,12 +47,12 @@ docs = [
 ]
 
 [tool.coverage.run]
-source = ["sunflare"]
+source = ["redsun_simulator"]
 omit = [
-    "src/sunflare/tests/conftest.py",
-    "src/sunflare/view/**",
-    "src/sunflare/engine/handler.py",
-    "src/sunflare/controller/**",
+    "src/redsun_simulator/tests/conftest.py",
+    "src/redsun_simulator/view/**",
+    "src/redsun_simulator/engine/handler.py",
+    "src/redsun_simulator/controller/**",
 ]
 
 # https://coverage.readthedocs.io/en/latest/config.html
