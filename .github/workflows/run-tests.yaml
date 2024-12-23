@@ -15,7 +15,7 @@ on:
       - "tests/**"
 
 env:
-  PROJECT_NAME: sunflare
+  PROJECT_NAME: redsun-simulator
 
 jobs:
   test:
