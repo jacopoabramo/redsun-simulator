@@ -16,7 +16,7 @@ class OpenWFSMotorInfo(MotorModelInfo):
     setpoint_time : ``float``, optional
         - Time required to simulate the motor moving to the setpoint in seconds.
         - Default is 0.1 seconds.
-    
+
     shutdown_time : ``float``, optional
         - Time required to simulate the motor shutdown in seconds.
         - Default is 0.5 seconds.

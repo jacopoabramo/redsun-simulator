@@ -1,4 +1,5 @@
 """Core simulators built using OpenWFS."""
+
 import numpy as np
 from astropy import units as u  # type: ignore[import-untyped]
 from openwfs.core import Actuator  # type: ignore[import-untyped]
@@ -29,7 +30,7 @@ class SingleAxisStage(Actuator):
     def axis(self) -> str:
         """Axis of the stage."""
         return self._axis
-    
+
     @property
     def step_size(self) -> float:
         """Step size in micrometers."""
