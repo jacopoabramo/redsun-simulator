@@ -1,7 +1,12 @@
-motors:
+models:
   Mock motor:
     model_name: OpenWFSMotor
-    axes:
+    axis:
       - X
       - Y
       - Z
+    step_size:
+      X: 1.0
+      Y: 1.0
+      Z: 1.0
+    egu: "um"

@@ -1,34 +1,34 @@
 from __future__ import annotations
 
 from time import sleep
-from typing import Any, Optional
 
 import astropy.units as u  # type: ignore[import-untyped]
 from astropy.units import Quantity
-from bluesky.protocols import Location
-from sunflare.engine import MotorModel, Status
+from openwfs import Actuator  # type: ignore[import-untyped]
+from sunflare.engine import Status
 
-from ._core import SingleAxisStage
+from bluesky.protocols import Location
+
 from .config import OpenWFSMotorInfo
 
 
-class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
+class OpenWFSMotor(Actuator):
     """OpenWFSMotor model."""
 
     def __init__(self, name: str, model_info: OpenWFSMotorInfo) -> None:
-        self._motors: dict[str, SingleAxisStage] = {
-            axis: SingleAxisStage(model_info.step_size, axis)
-            for axis in model_info.axes
-        }
+        self._name = name
+        self._model_info = model_info
+        self._axis = model_info.axis
+        self._step_size = model_info.step_size
 
-        self._setpoint: dict[str, float] = {axis: 0.0 for axis in model_info.axes}
-        self._readback: dict[str, float] = {axis: 0.0 for axis in model_info.axes}
+        self._setpoint: dict[str, float] = {axis: 0.0 for axis in model_info.axis}
+        self._readback: dict[str, float] = {axis: 0.0 for axis in model_info.axis}
 
-        self._current_axis = model_info.axes[0]
+        self._current_axis = model_info.axis[0]
         self._shutdown_time = model_info.shutdown_time
         self._setpoint_time = model_info.setpoint_time
 
-        super().__init__(name, model_info)
+        super().__init__(duration=0 * u.ms, latency=0 * u.ms)
 
     def shutdown(self) -> None:
         """Shutdown the motor.
@@ -88,8 +88,8 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
 
     @current_axis.setter
     def current_axis(self, axis: str) -> None:
-        if axis not in self.model_info.axes:
-            raise IndexError(f"Axis {axis} is not in {self.model_info.axes}")
+        if axis not in self.model_info.axis:
+            raise IndexError(f"Axis {axis} is not in {self.model_info.axis}")
         self._current_axis = axis
 
     @property
@@ -110,13 +110,19 @@ class OpenWFSMotor(MotorModel[OpenWFSMotorInfo]):
         s : Status
             The status object (not used).
         """
-        self._motors[self.current_axis].wait(
-            up_to=Quantity(self.setpoint_time * 1000, u.ms)
-        )
+        self.wait(up_to=Quantity(self.setpoint_time * 1000, u.ms))
         self._readback[self.current_axis] = self._setpoint[self.current_axis]
 
     @property
-    def parent(self) -> Optional[Any]:
-        # TODO: how to get rid of this?
-        #       or alternatively, how to make it useful?
+    def model_info(self) -> OpenWFSMotorInfo:
+        """The model information."""
+        return self._model_info
+
+    @property
+    def name(self) -> str:
+        """The name of the motor."""
+        return self._name
+
+    @property
+    def parent(self) -> None:
         return None

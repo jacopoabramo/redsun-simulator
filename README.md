@@ -2,7 +2,7 @@
 
 [![License BSD-3](https://img.shields.io/pypi/l/redsun-simulator.svg?color=green)](https://github.com/redsun-acquisition/redsun-simulator/raw/main/LICENSE)
 
-Bundle of simulators built upon OpenWFS
+Bundle of simulators built upon OpenWFS.
 
 ----------------------------------
 

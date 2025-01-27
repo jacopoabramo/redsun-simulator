@@ -7,6 +7,7 @@ import bluesky.plan_stubs as bps
 import numpy as np
 import pytest
 import yaml
+from typing import Any
 from bluesky.protocols import Location
 from bluesky.run_engine import RunEngine
 from bluesky.utils import MsgGenerator
@@ -21,8 +22,8 @@ def motor_config(config_path: str) -> dict[str, OpenWFSMotorInfo]:
     motors: dict[str, OpenWFSMotorInfo] = {}
 
     with open(config_path, "r") as file:
-        config_dict = yaml.safe_load(file)
-        for name, values in config_dict["motors"].items():
+        config_dict: dict[str, Any] = yaml.safe_load(file)
+        for name, values in config_dict["models"].items():
             config = OpenWFSMotorInfo(**values)
             motors[name] = config
     return motors
@@ -38,11 +39,10 @@ def test_motor_construction(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
     for name, info in motor_config.items():
         motor = OpenWFSMotor(name, info)
         assert motor.name == name
-        assert motor.axes == info.axes
-        assert motor.step_egu == info.step_egu
-        assert motor.step_size == info.step_size
-        assert motor.return_home is info.return_home
-        assert motor.shutdown_time == info.shutdown_time
+        assert motor.model_info.axis == info.axis
+        assert motor.model_info.egu == info.egu
+        assert motor.model_info.step_size == info.step_size
+        assert motor.model_info.shutdown_time == info.shutdown_time
 
 def test_motor_properties(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
     """Test changing properties.
@@ -55,12 +55,12 @@ def test_motor_properties(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
 
         # change axis
         axis = "Y"
-        assert motor.current_axis == info.axes[0]
+        assert motor.current_axis == info.axis[0]
         motor.current_axis = axis
-        assert motor.current_axis == info.axes[1]
+        assert motor.current_axis == info.axis[1]
         axis = "Z"
         motor.current_axis = axis
-        assert motor.current_axis == info.axes[2]
+        assert motor.current_axis == info.axis[2]
 
 def test_motor_set_direct(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
     """Test the motor movement via direct invocation of the ``set`` method.
@@ -80,7 +80,7 @@ def test_motor_set_direct(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
             # maybe generate randomly?
             motor.current_axis = "A"
 
-        for axis in motor.axes:
+        for axis in motor.model_info.axis:
             motor.current_axis = axis
             status = motor.set(100)
             status.wait()
