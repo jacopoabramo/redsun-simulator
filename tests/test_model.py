@@ -155,7 +155,7 @@ def test_motor_plan_relative(motor_config: dict[str, OpenWFSMotorInfo], RE: RunE
     - then move of 200.
     """
     def moving_plan(motors: Tuple[OpenWFSMotor, ...]) -> MsgGenerator:
-        """Move the motor to position 100 and then to position 200."""
+        """Move the motor of 100 steps and then of 200 steps."""
         for m in motors:
             yield from bps.mvr(m, 100)
             yield from bps.mvr(m, 200)
