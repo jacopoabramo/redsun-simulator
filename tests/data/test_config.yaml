@@ -6,7 +6,8 @@ models:
       - Y
       - Z
     step_size:
-      X: 1.0
-      Y: 1.0
-      Z: 1.0
+      X: 100.0
+      Y: 100.0
+      Z: 100.0
+    setpoint_time: 0.1
     egu: "um"

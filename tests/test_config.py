@@ -17,6 +17,7 @@ def test_motor_model_info(config_path: str) -> None:
 
     assert config.model_name == "OpenWFSMotor"
     assert config.axis == ["X", "Y", "Z"]
-    assert config.step_size == {"X": 1.0, "Y": 1.0, "Z": 1.0}
+    assert config.step_size == {"X": 100.0, "Y": 100.0, "Z": 100.0}
     assert config.egu == "um"
     assert config.shutdown_time == 0.5
+    assert config.setpoint_time == 0.1

@@ -44,6 +44,22 @@ def test_motor_construction(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
         assert motor.model_info.step_size == info.step_size
         assert motor.model_info.shutdown_time == info.shutdown_time
 
+def test_motor_configurable_protocol(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
+    for name, info in motor_config.items():
+        motor = OpenWFSMotor(name, info)
+        cfg = motor.read_configuration()
+        assert cfg == {
+            "vendor": {"value": "N/A", "timestamp": 0},
+            "serial_number": {"value": "N/A", "timestamp": 0},
+            "plugin_name": {"value": "N/A", "timestamp": 0},
+            "repository": {"value": "N/A", "timestamp": 0},
+            "axis": {"value": info.axis, "timestamp": 0},
+            "step_size": {"value": info.step_size, "timestamp": 0},
+            "egu": {"value": info.egu, "timestamp": 0},
+            "setpoint_time": {"value": info.setpoint_time, "timestamp": 0},
+            "shutdown_time": {"value": info.shutdown_time, "timestamp": 0},
+        }
+
 def test_motor_properties(motor_config: dict[str, OpenWFSMotorInfo]) -> None:
     """Test changing properties.
     

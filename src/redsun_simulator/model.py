@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from time import sleep
-from typing import Any, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
 
 import astropy.units as u  # type: ignore[import-untyped]
+import numpy as np
 from astropy.units import Quantity
 from bluesky.protocols import Location
 from openwfs import Actuator  # type: ignore[import-untyped]
 from sunflare.engine import Status
-
 
 if TYPE_CHECKING:
     from .config import OpenWFSMotorInfo
@@ -42,14 +42,18 @@ class OpenWFSMotor(Actuator):
     def set(self, value: float, axis: Optional[str] = None) -> Status:
         """Start moving the motor to the setpoint.
 
-        The axis along which to move is determined by the ``current_axis`` attribute.
-        A ``Status`` object is returned to track the movement; this has a callback
+        The axis along which to move is determined either by `axis`
+        or the `current_axis` attribute. A ``Status`` object is
+        returned to track the movement; this has a callback
         to simulate the setpoint being reached.
 
         Parameters
         ----------
-        value : AxisLocation[float]
+        value : float
             The location to move to.
+        axis : str, optional
+            The axis along which to move.
+            If not specified, `current_axis` is used.
 
         Returns
         -------
@@ -60,7 +64,12 @@ class OpenWFSMotor(Actuator):
         s.add_callback(self._wait_readback)
         if axis is None:
             axis = self.current_axis
-        self._setpoint[axis] = value  # type: ignore[index]
+        steps = np.floor((value - self._setpoint[axis]) / self._step_size[axis]).astype(
+            int
+        )
+        for _ in range(steps):
+            self._setpoint[axis] += self._step_size[axis]
+            self.wait(up_to=Quantity(self.setpoint_time * 1000, u.ms))
         s.set_finished()
         return s
 
@@ -68,10 +77,10 @@ class OpenWFSMotor(Actuator):
         setattr(self.model_info, name, value)
 
     def read_configuration(self) -> dict[str, Any]:
-        return dict()
+        return self.model_info.read_configuration()
 
     def describe_configuration(self) -> dict[str, Any]:
-        return dict()
+        return self.model_info.describe_configuration()
 
     def locate(self) -> Location[float]:
         """Return the current location of a Device.
@@ -123,7 +132,6 @@ class OpenWFSMotor(Actuator):
         s : Status
             The status object (not used).
         """
-        self.wait(up_to=Quantity(self.setpoint_time * 1000, u.ms))
         self._readback[self.current_axis] = self._setpoint[self.current_axis]
 
     @property
