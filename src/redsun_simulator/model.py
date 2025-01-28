@@ -1,16 +1,17 @@
 from __future__ import annotations
 
 from time import sleep
+from typing import Any, Optional, TYPE_CHECKING
 
 import astropy.units as u  # type: ignore[import-untyped]
-from typing import Optional, Any
 from astropy.units import Quantity
+from bluesky.protocols import Location
 from openwfs import Actuator  # type: ignore[import-untyped]
 from sunflare.engine import Status
 
-from bluesky.protocols import Location
 
-from .config import OpenWFSMotorInfo
+if TYPE_CHECKING:
+    from .config import OpenWFSMotorInfo
 
 
 class OpenWFSMotor(Actuator):
