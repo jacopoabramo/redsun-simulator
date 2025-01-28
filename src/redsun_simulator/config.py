@@ -6,7 +6,6 @@ __all__ = ["OpenWFSMotorInfo"]
 
 @define
 class OpenWFSMotorInfo(MotorInfo):
-    # TODO: add link to main documentation
     """Configuration information for the OpenWFSMotor.
 
     See the following link_ for the base class.

@@ -58,6 +58,8 @@ class OpenWFSMotor(Actuator):
         """
         s = Status()
         s.add_callback(self._wait_readback)
+        if axis is None:
+            axis = self.current_axis
         self._setpoint[axis] = value  # type: ignore[index]
         s.set_finished()
         return s
