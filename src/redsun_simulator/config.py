@@ -20,6 +20,7 @@ class OpenWFSMotorInfo(MotorInfo):
     shutdown_time : ``float``, optional
         - Time required to simulate the motor shutdown in seconds.
         - Default is 0.5 seconds.
+
     """
 
     setpoint_time: float = field(default=0.5)

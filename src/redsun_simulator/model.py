@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class OpenWFSMotor(Actuator):
-    """OpenWFSMotor model."""
+    """General purpose motor model. Simulates a motor moving on multiple axis."""
 
     def __init__(self, name: str, model_info: OpenWFSMotorInfo) -> None:
         self._name = name
@@ -59,6 +59,7 @@ class OpenWFSMotor(Actuator):
         -------
         status : Status
             The status of the movement
+
         """
         s = Status()
         s.add_callback(self._wait_readback)
@@ -74,12 +75,38 @@ class OpenWFSMotor(Actuator):
         return s
 
     def configure(self, name: str, value: Any) -> None:
+        """Configure the motor.
+
+        Parameters
+        ----------
+        name : str
+            The name of the configuration parameter.
+        value : Any
+            The value to set the configuration
+
+        """
         setattr(self.model_info, name, value)
 
     def read_configuration(self) -> dict[str, Any]:
+        """Read the device configuration as a Bluesky document.
+
+        Returns
+        -------
+        configuration : dict[str, Any]
+            The configuration parameters of the device.
+
+        """
         return self.model_info.read_configuration()
 
     def describe_configuration(self) -> dict[str, Any]:
+        """Describe the device configuration as a Bluesky document.
+
+        Returns
+        -------
+        configuration : dict[str, Any]
+            The configuration parameters of the device.
+
+        """
         return self.model_info.describe_configuration()
 
     def locate(self) -> Location[float]:
@@ -95,8 +122,9 @@ class OpenWFSMotor(Actuator):
 
         Returns
         -------
-        location : AxisLocation[float]
+        location : Location[float]
             The current location of the Device.
+
         """
         return Location(
             setpoint=self._setpoint[self.current_axis],
@@ -131,6 +159,7 @@ class OpenWFSMotor(Actuator):
         ----------
         s : Status
             The status object (not used).
+
         """
         self._readback[self.current_axis] = self._setpoint[self.current_axis]
 
@@ -146,4 +175,5 @@ class OpenWFSMotor(Actuator):
 
     @property
     def parent(self) -> None:
+        """Model parent. For compatibility with Bluesky's ophyd interface."""
         return None
