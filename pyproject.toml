@@ -27,7 +27,7 @@ classifiers = [
 ]
 requires-python = ">=3.9"
 dependencies = [
-    "sunflare>=0.3.0",
+    "sunflare",
     "openwfs"
 ]
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 from time import sleep
 
 import astropy.units as u  # type: ignore[import-untyped]
+from typing import Optional, Any
 from astropy.units import Quantity
 from openwfs import Actuator  # type: ignore[import-untyped]
 from sunflare.engine import Status
@@ -37,7 +38,7 @@ class OpenWFSMotor(Actuator):
         """
         sleep(self.model_info.shutdown_time)
 
-    def set(self, value: float) -> Status:
+    def set(self, value: float, axis: Optional[str] = None) -> Status:
         """Start moving the motor to the setpoint.
 
         The axis along which to move is determined by the ``current_axis`` attribute.
@@ -56,9 +57,18 @@ class OpenWFSMotor(Actuator):
         """
         s = Status()
         s.add_callback(self._wait_readback)
-        self._setpoint[self.current_axis] = value
+        self._setpoint[axis] = value  # type: ignore[index]
         s.set_finished()
         return s
+
+    def configure(self, name: str, value: Any) -> None:
+        setattr(self.model_info, name, value)
+
+    def read_configuration(self) -> dict[str, Any]:
+        return dict()
+
+    def describe_configuration(self) -> dict[str, Any]:
+        return dict()
 
     def locate(self) -> Location[float]:
         """Return the current location of a Device.
