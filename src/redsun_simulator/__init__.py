@@ -7,8 +7,8 @@ except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"
 
 
-from .engine.bluesky.config import OpenWFSMotorInfo
-from .engine.bluesky.model import OpenWFSMotor
+from .config import OpenWFSMotorInfo
+from .model import OpenWFSMotor
 
 __all__ = (
     "OpenWFSMotor",
