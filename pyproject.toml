@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "redsun-simulator"
 dynamic = ["version"]
-description = "Bundle of simulators built upon OpenWFS"
+description = "Bundle of simulator plugins for RedSun"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
