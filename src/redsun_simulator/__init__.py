@@ -5,9 +5,7 @@ try:
 except PackageNotFoundError:  # pragma: no cover
     __version__ = "unknown"
 
-
-from .config import OpenWFSMotorInfo
-from .model import OpenWFSMotor
+from .openwfs import OpenWFSMotor, OpenWFSMotorInfo
 
 __all__ = (
     "OpenWFSMotor",

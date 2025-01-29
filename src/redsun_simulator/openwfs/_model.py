@@ -11,7 +11,7 @@ from openwfs import Actuator  # type: ignore[import-untyped]
 from sunflare.engine import Status
 
 if TYPE_CHECKING:
-    from .config import OpenWFSMotorInfo
+    from ._config import OpenWFSMotorInfo
 
 
 class OpenWFSMotor(Actuator):
