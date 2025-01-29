@@ -2,7 +2,9 @@
 
 [![License BSD-3](https://img.shields.io/pypi/l/redsun-simulator.svg?color=green)](https://github.com/redsun-acquisition/redsun-simulator/raw/main/LICENSE)
 
-Bundle of simulators built upon OpenWFS.
+Bundle of software simulators. It provides simulation functionalities from different python packages:
+
+- [`openwfs`] wavefront shaping toolkit
 
 ----------------------------------
 
@@ -38,6 +40,7 @@ Distributed under the terms of the [BSD-3] license,
 
 If you encounter any problems, please [file an issue] along with a detailed description.
 
+[openwfs]: https://github.com/IvoVellekoop/openwfs
 [pytest]: https://docs.pytest.org/en/latest/
 [copier]: https://copier.readthedocs.io/en/stable/
 [BSD-3]: http://opensource.org/licenses/BSD-3-Clause
