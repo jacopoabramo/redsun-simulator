@@ -210,14 +210,47 @@ class OpenWFSCamera(Camera):
         )
 
     def configure(self, name: str, value: Any) -> None:
-        # TODO: how to handle configuration
-        # of nested attrs classes?
-        # some of them are frozen
+        """Configure the camera.
+
+        Parameters
+        ----------
+        name : str
+            The name of the configuration parameter.
+        value : Any
+            The value to set the configuration
+
+        """
         setattr(self.model_info, name, value)
+
+    def read_configuration(self) -> dict[str, Any]:
+        """Read the device configuration as a Bluesky document.
+
+        Returns
+        -------
+        configuration : dict[str, Any]
+            The configuration parameters of the device.
+
+        """
+        return self.model_info.read_configuration()
+
+    def describe_configuration(self) -> dict[str, Any]:
+        """Describe the device configuration as a Bluesky document.
+
+        Returns
+        -------
+        configuration : dict[str, Any]
+            The configuration parameters of the device.
+
+        """
+        return self.model_info.describe_configuration()
 
     @property
     def name(self) -> str:
         return self._name
+
+    @property
+    def parent(self) -> None:
+        return None
 
     @property
     def model_info(self) -> OpenWFSCameraInfo:
