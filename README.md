@@ -4,7 +4,7 @@
 
 Bundle of software simulators. It provides simulation functionalities from different python packages:
 
-- [`openwfs`] wavefront shaping toolkit
+- [openwfs] wavefront shaping toolkit
 
 ----------------------------------
 
