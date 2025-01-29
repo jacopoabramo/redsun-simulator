@@ -8,11 +8,11 @@ import numpy as np
 from astropy.units import Quantity
 from bluesky.protocols import Location
 from openwfs import Actuator
-from openwfs.simulation import Camera
+from openwfs.simulation import Camera, StaticSource, Microscope
 from sunflare.engine import Status
 
 if TYPE_CHECKING:
-    from ._config import OpenWFSMotorInfo
+    from ._config import OpenWFSMotorInfo, OpenWFSCameraInfo
 
 
 __all__ = ["OpenWFSMotor", "OpenWFSCamera"]
@@ -184,5 +184,41 @@ class OpenWFSMotor(Actuator):
 
 
 class OpenWFSCamera(Camera):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name: str, model_info: OpenWFSCameraInfo) -> None:
+        self._name = name
+        self._model_info = model_info
+        specimen = model_info.specimen
+        img = np.maximum(
+            np.random.randint(-10000, 10, specimen.resolution, dtype=np.int16), 0
+        )
+        src = StaticSource(img, specimen.pixel_size)
+        microscope = Microscope(
+            source=src,
+            magnification=specimen.magnification,
+            numerical_aperture=specimen.numerical_aperture,
+            wavelength=specimen.wavelength,
+        )
+
+        # TODO: digital_max=255 forces to be uint8;
+        # can this be customized?
+        super().__init__(
+            source=microscope,
+            shape=model_info.sensor_shape,
+            shot_noise=True,
+            analog_max=None,
+            digital_max=255,
+        )
+
+    def configure(self, name: str, value: Any) -> None:
+        # TODO: how to handle configuration
+        # of nested attrs classes?
+        # some of them are frozen
+        setattr(self.model_info, name, value)
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def model_info(self) -> OpenWFSCameraInfo:
+        return self._model_info
