@@ -27,17 +27,18 @@ classifiers = [
 ]
 requires-python = ">=3.9"
 dependencies = [
-    "sunflare",
-    "openwfs"
+    "sunflare"
 ]
 
 [project.optional-dependencies]
+openwfs = ["openwfs"]
 dev = [
-  "ruff",
-  "pre-commit",
-  "pytest",
-  "pytest-cov",
-  "mypy"
+    "openwfs",
+    "ruff",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "mypy"
 ]
 docs = [
     "sphinx",
@@ -79,7 +80,21 @@ extend-exclude = ["docs", "tests"]
 
 [tool.ruff.lint]
 extend-select = ["D"]
-ignore = ["D100","D104", "D107"] # https://docs.astral.sh/ruff/rules/undocumented-public-package/
+ignore = [
+    "D100", # https://docs.astral.sh/ruff/rules/undocumented-public-module/
+    "D104", # https://docs.astral.sh/ruff/rules/undocumented-public-package/ 
+    "D107", # https://docs.astral.sh/ruff/rules/undocumented-public-init/
+]
+
+[tool.mypy]
+files = "src/**/*.py"
+exclude = ["docs", "tests", "build"]
+disable_error_code = ["import-untyped"]
+pretty = true
+
+[[tool.mypy.overrides]]
+module = ["openwfs.*"]
+ignore_missing_imports = true
 
 [tool.hatch.version]
 source = "vcs"
