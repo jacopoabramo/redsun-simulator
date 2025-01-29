@@ -16,12 +16,12 @@ from redsun_simulator import OpenWFSMotor, OpenWFSMotorInfo
 
 
 @pytest.fixture
-def motor_config(config_path: str) -> dict[str, OpenWFSMotorInfo]:
+def motor_config(motor_config_path: str) -> dict[str, OpenWFSMotorInfo]:
     """Return the motors configuration."""
 
     motors: dict[str, OpenWFSMotorInfo] = {}
 
-    with open(config_path, "r") as file:
+    with open(motor_config_path, "r") as file:
         config_dict: dict[str, Any] = yaml.safe_load(file)
         for name, values in config_dict["models"].items():
             config = OpenWFSMotorInfo(**values)

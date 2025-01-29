@@ -1,0 +1,11 @@
+models:
+  Mock camera:
+    model_name: OpenWFSCamera
+    specimen:
+      resolution: [1024, 1024]
+      pixel_size: 60.0
+      magnification: 40
+      numerical_aperture: 0.85
+      wavelength: 532.8
+    sensor_shape: [256, 256]
+    pixel_size: [8.5, 8.5, 8.5]

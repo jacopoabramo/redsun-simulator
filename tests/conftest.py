@@ -5,8 +5,12 @@ import pytest
 
 
 @pytest.fixture
-def config_path() -> str:
-    return os.path.join(os.path.dirname(__file__), "data/test_config.yaml")
+def motor_config_path() -> str:
+    return os.path.join(os.path.dirname(__file__), "data/test_motor_config.yaml")
+
+@pytest.fixture
+def camera_config_path() -> str:
+    return os.path.join(os.path.dirname(__file__), "data/test_camera_config.yaml")
 
 @pytest.fixture()
 def logger() -> logging.Logger:

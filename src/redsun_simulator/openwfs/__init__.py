@@ -1,7 +1,8 @@
+from ._config import OpenWFSCameraInfo, OpenWFSMotorInfo
 from ._model import OpenWFSMotor
-from ._config import OpenWFSMotorInfo
 
 __all__ = (
     "OpenWFSMotor",
     "OpenWFSMotorInfo",
+    "OpenWFSCameraInfo",
 )

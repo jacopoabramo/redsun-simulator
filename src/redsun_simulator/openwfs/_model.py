@@ -3,15 +3,19 @@ from __future__ import annotations
 from time import sleep
 from typing import TYPE_CHECKING, Any, Optional
 
-import astropy.units as u  # type: ignore[import-untyped]
+import astropy.units as u
 import numpy as np
 from astropy.units import Quantity
 from bluesky.protocols import Location
-from openwfs import Actuator  # type: ignore[import-untyped]
+from openwfs import Actuator
+from openwfs.simulation import Camera
 from sunflare.engine import Status
 
 if TYPE_CHECKING:
     from ._config import OpenWFSMotorInfo
+
+
+__all__ = ["OpenWFSMotor", "OpenWFSCamera"]
 
 
 class OpenWFSMotor(Actuator):
@@ -177,3 +181,8 @@ class OpenWFSMotor(Actuator):
     def parent(self) -> None:
         """Model parent. For compatibility with Bluesky's ophyd interface."""
         return None
+
+
+class OpenWFSCamera(Camera):
+    def __init__(self):
+        super().__init__()
