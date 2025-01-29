@@ -12,7 +12,7 @@ from bluesky.protocols import Location
 from bluesky.run_engine import RunEngine
 from bluesky.utils import MsgGenerator
 
-from redsun_simulator import OpenWFSMotor, OpenWFSMotorInfo
+from redsun_simulator.openwfs import OpenWFSMotor, OpenWFSMotorInfo
 
 
 @pytest.fixture

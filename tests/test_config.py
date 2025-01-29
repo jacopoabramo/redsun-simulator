@@ -2,7 +2,7 @@
 import yaml
 from typing import Any
 
-from redsun_simulator import OpenWFSMotorInfo, OpenWFSCameraInfo
+from redsun_simulator.openwfs import OpenWFSMotorInfo, OpenWFSCameraInfo
 from redsun_simulator.openwfs._config import Specimen
 
 

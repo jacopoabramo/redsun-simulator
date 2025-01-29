@@ -8,11 +8,11 @@ import numpy as np
 from astropy.units import Quantity
 from bluesky.protocols import Location
 from openwfs import Actuator
-from openwfs.simulation import Camera, StaticSource, Microscope
+from openwfs.simulation import Camera, Microscope, StaticSource
 from sunflare.engine import Status
 
 if TYPE_CHECKING:
-    from ._config import OpenWFSMotorInfo, OpenWFSCameraInfo
+    from ._config import OpenWFSCameraInfo, OpenWFSMotorInfo
 
 
 __all__ = ["OpenWFSMotor", "OpenWFSCamera"]
